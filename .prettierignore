@@ -1,0 +1,7 @@
+# 忽略文件或目录:
+build
+public
+dist
+
+# 忽略html文件:
+*.html

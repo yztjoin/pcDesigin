@@ -1,0 +1,469 @@
+// ------------------------------基础（字体、文本、颜色、对齐、缩进、溢出处理）---------------------------------
+/*
+* 字体（大小）
+*/
+.fz(@fz) {
+  font-size: @fz;
+}
+
+/*
+* 字体（颜色）
+*/
+.fc(@fc) {
+  color: @fc;
+}
+
+/*
+* 字体（加粗）
+*/
+.fw(@fw: normal) {
+  font-weight: @fw;
+}
+
+/*
+* 背景颜色
+*/
+.bc(@bc) {
+  background-color: @bc;
+}
+
+/*
+* 文本（居中对齐）
+*/
+.tc() {
+  text-align: center;
+}
+
+/*
+* 文本（左对齐）
+*/
+.tl() {
+  text-align: left;
+}
+
+/*
+* 文本（右对齐）
+*/
+.tr() {
+  text-align: right;
+}
+
+/*
+* 文字（首行缩进）
+*/
+.txt-it(@it) {
+  text-indent: @it;
+}
+
+/*
+* 文本溢出省略号显示 (单行)
+*/
+.overflow() {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/*
+* 文本溢出省略号显示 (多行)
+*/
+.mutiple-overflow(@line: 2) {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: @line;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
+}
+
+// ---------------------- 布局、尺寸 ----------------------------------------
+// 盒子宽高
+.size(@w, @h) {
+  width: @w;
+  height: @h;
+}
+
+// 最小尺寸 兼容ie6
+.min-width(@min-w) {
+  min-width: @min-w;
+  _width: @min-w;
+}
+
+.min-height(@min-h) {
+  min-height: @min-h;
+  _height: @min-h;
+}
+
+// 首字母下沉
+.first-letter(@font-size: 6em) {
+  &::first-letter {
+    float: left;
+    line-height: 1;
+    font-size: @font-size;
+  }
+}
+
+//-------------------------------盒子（边框、圆角、渐变、阴影）---------------------------------
+/*
+*  边框（边框宽度、样式、颜色、圆角）
+*  调用方法  .border(1px,solid,red,8px);
+*/
+.border(@width, @style, @color) {
+  border: @arguments;
+}
+
+// -------------------------- 浮动 -----------------
+// 左浮动, 兼容 IE6
+.fl() {
+  float: left;
+  *display: inline;
+  _display: inline;
+}
+
+// 右浮动
+.fr() {
+  float: right;
+  *display: inline;
+  _display: inline;
+}
+
+// 清除浮动
+.clearfix() {
+  *zoom: 1;
+
+  &:after {
+    display: block;
+    clear: both;
+    content: '';
+    visibility: hidden;
+    height: 0;
+  }
+}
+
+// ---------------------- flex 布局 ---------------------------
+// 使用示例 .flex(wrap,v,align-center,justify-center)
+.flex(@rest...) {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+
+  .mixin(wrap) {
+    -webkit-box-lines: multiple;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+  }
+
+  .mixin(v) {
+    -webkit-box-orient: vertical;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+  }
+
+  .mixin(align-center) {
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+  }
+
+  .mixin(justify-center) {
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+  }
+
+  .loop(@i) when (@i > 0) {
+    .loop((@i - 1));
+    .mixin(extract(@rest, @i));
+  }
+
+  .loop(length(@arguments));
+}
+
+/*
+* 1px边框（边框颜色、边框方向）
+* 调用方法 .border-1px(border-top, red);
+*/
+.border-1px(@property: border, @color: #ddd) {
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    .size(200%, 200%);
+    -webkit-@{property}: @color;
+    -moz-@{property}: @color;
+    -ms-@{property}: @color;
+    -o-@{property}: @color;
+    @{property}: 1px solid @color;
+    -webkit-transform-origin: left top;
+    transform-origin: left top;
+    -webkit-transform: scale(0.5);
+    transform: scale(0.5);
+    pointer-events: none;
+    /* 防止点击触发 */
+    box-sizing: border-box;
+
+    @media screen and (min-device-pixel-ratio: 3), (-webkit-min-device-pixel-ratio: 3) {
+      width: 300%;
+      height: 300%;
+      -webkit-transform: scale(0.33);
+      transform: scale(0.33);
+    }
+  }
+}
+
+// ----------------------------- 圆角 ----------------------
+// 圆角（所有）
+.radius(all, @rad: 8px) {
+  border-radius: @rad;
+  -webkit-border-radius: @rad;
+  -moz-border-radius: @rad;
+  -ms-border-radius: @rad;
+  -o-border-radius: @rad;
+}
+
+//  圆角（左上）
+.radius(top-left, @rad: 8px) {
+  border-top-left-radius: @rad;
+  -webkit-border-top-left-radius: @rad;
+  -moz-border-top-left-radius: @rad;
+  -ms-border-top-left-radius: @rad;
+  -o-border-top-left-radius: @rad;
+}
+
+//  圆角（右上）
+.radius(top-right, @rad: 8px) {
+  border-top-right-radius: @rad;
+  -webkit-border-right-left-radius: @rad;
+  -moz-border-top-right-radius: @rad;
+  -ms-border-top-right-radius: @rad;
+  -o-border-top-right-radius: @rad;
+}
+
+//  圆角（左下）
+.radius(bottom-left, @rad: 8px) {
+  border-bottom-left-radius: @rad;
+  -webkit-border-bottom-left-radius: @rad;
+  -moz-border-bottom-left-radius: @rad;
+  -ms-border-bottom-left-radius: @rad;
+  -o-border-bottom-left-radius: @rad;
+}
+
+/*
+*  圆角（右下）
+*/
+.radius(bottom-right, @rad: 8px) {
+  border-bottom-right-radius: @rad;
+  -webkit-border-bottom-right-radius: @rad;
+  -moz-border-bottom-right-radius: @rad;
+  -ms-border-bottom-right-radius: @rad;
+  -o-border-bottom-right-radius: @rad;
+}
+
+/*
+*  渐变（渐变方向、起点色、终点色）
+*/
+.gradient(@direct, @color1, @color2) {
+  background: linear-gradient(@direct, @color1, @color2);
+}
+
+/*
+* 盒子阴影（自定义参数个数）
+*/
+.boxShadow(...) {
+  box-shadow: @arguments;
+}
+
+//-------------------------------图像---------------------------------
+// 背景图（图片路径、宽、高、水平位置、垂直位置、是否重复）
+.bg-img(@img, @w, @h, @position_l: center, @position_t: center, @repeat: no-repeat) {
+  background-image: url(@img);
+  background-size: @w @h;
+  background-position: @position_l @position_t;
+  background-repeat: @repeat;
+}
+
+//-------------------------------组件---------------------------------
+// 通用（用于默认样式的去除（button）及日常块级元素的居中等）
+.common-style() {
+  display: block;
+  margin: 0 auto;
+  box-sizing: border-box;
+  outline: none;
+  border: none;
+}
+
+// ----------------- 三角 ---------------------
+.triangle(top, @w: 5px, @c: #eee) {
+  border-width: @w;
+  border-color: transparent transparent @c transparent;
+  border-style: dashed dashed solid dashed;
+}
+
+.triangle(bottom, @w: 5px, @c: #eee) {
+  border-width: @w;
+  border-color: @c transparent transparent transparent;
+  border-style: solid dashed dashed dashed;
+}
+
+.triangle(left, @w: 5px, @c: #eee) {
+  border-width: @w;
+  border-color: transparent @c transparent transparent;
+  border-style: dashed dashed solid dashed;
+}
+
+.triangle(right, @w: 5px, @c: #eee) {
+  border-width: @w;
+  border-color: transparent transparent transparent @c;
+  border-style: solid dashed dashed dashed;
+}
+
+.triangle(@_) {
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+// ------------------- 空心圆 --------------------------
+.circle(@diam, @width, @style, @color) {
+  display: block;
+  width: @diam;
+  height: @diam;
+  border-radius: 50%;
+  .border(@width, @style, @color);
+}
+
+// --------------------- 黑色遮罩背景（多用于弹窗） ---------------------
+.mask(@color, @percent) {
+  width: 100%;
+  height: 100%;
+  background-color: fade(@color, @percent);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 999;
+}
+
+// ------------------------------ 居中 -----------------
+// 水平垂直居中
+.center(vh, @w, @h) {
+  width: @w;
+  height: @h;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -(@w / 2);
+  margin-top: -(@h / 2);
+}
+
+// 水平居中
+.center(h, @w) {
+  width: @w;
+  position: absolute;
+  left: 50%;
+  margin-left: -(@w / 2);
+}
+
+// 垂直居中
+.center(v, @h) {
+  height: @h;
+  position: absolute;
+  top: 50%;
+  margin-top: -(@h / 2);
+}
+
+/*
+* input输入框（宽、高、边框宽度、边框颜色、圆角、左右内边距、水平对齐、字体大小、字体颜色、占位符字体颜色）
+*/
+.ipt-style(@width, @height, @bw, @bc, @rad, @pad, @td, @fz, @fc, @pfc) {
+  .common-style;
+  width: @width;
+  height: @height;
+  line-height: @height;
+  // background: #fff;
+  border: @bw solid @bc;
+  padding: 0 @pad;
+  text-align: @td;
+  .bc(#fff);
+  .radius(@rad);
+  .fz(@fz);
+  .fc(@fc);
+
+  &::-webkit-input-placeholder {
+    .fc(@pfc);
+  }
+}
+
+/*
+* 按钮（宽、高、背景颜色、字体大小、字体颜色、字体加粗、圆角）
+*/
+.btn-style(@width, @height, @bc, @fz, @fc, @fw, @rad) {
+  .common-style;
+  width: @width;
+  height: @height;
+  line-height: @height;
+  text-align: center;
+  // background: @bc;
+  .bc(@bc);
+  .fz(@fz);
+  .fc(@fc);
+  .fw(@fw);
+  .radius(@rad);
+}
+
+//-------------------------------动画---------------------------------
+/*
+* 翻卡动画（自定义 动画名称、动画时间、速度曲线、次数、结束状态）
+*/
+.turnCard(@name, @duration: 1s, @func: linear, @count: 1, @mode: forwards) {
+  @keyframes @name {
+    0% {
+      transform: rotateY(0);
+    }
+
+    100% {
+      transform: rotateY(360deg);
+    }
+  }
+
+  @-webkit-keyframes @name {
+    0% {
+      transform: rotateY(0);
+    }
+
+    100% {
+      transform: rotateY(360deg);
+    }
+  }
+
+  animation: @arguments;
+}
+
+/*
+* 弹窗底部弹出动画（自定义内容 同上）
+*/
+.bot-show(@name: slowShow, @duration: 0.3s, @func: ease-out, @count: 1, @mode: forwards) {
+  @keyframes @name {
+    0% {
+      transform: translateY(100%);
+    }
+
+    100% {
+      transform: translateY(0);
+    }
+  }
+
+  @-webkit-keyframes @name {
+    0% {
+      transform: translateY(100%);
+    }
+
+    100% {
+      transform: translateY(0);
+    }
+  }
+
+  animation: @arguments;
+}

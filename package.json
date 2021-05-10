@@ -1,0 +1,87 @@
+{
+  "name": "@vue-materials/vue-cli3",
+  "version": "1.4.8",
+  "author": "uufe",
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "dev": "vue-cli-service serve",
+    "new:page": "node ./scripts/generateView",
+    "new:comp": "node ./scripts/generateComponent",
+    "zip": "gulp clean && vue-cli-service build && gulp default --note",
+    "auto": "prettier --write src/"
+  },
+  "dependencies": {
+    "amfe-flexible": "^2.2.1",
+    "better-scroll": "1.12.6",
+    "chalk": "^4.0.0",
+    "clipboardy": "^2.3.0",
+    "compression-webpack-plugin": "^3.1.0",
+    "core-js": "^3.6.4",
+    "dayjs": "^1.8.26",
+    "gulp": "^4.0.2",
+    "gulp-clean": "^0.4.0",
+    "gulp-zip": "^5.0.0",
+    "jquery": "^3.3.1",
+    "mockjs": "^1.1.0",
+    "postcss-px2rem-exclude": "^0.0.6",
+    "prettier": "^2.2.0",
+    "stylus": "^0.54.5",
+    "stylus-loader": "^3.0.2",
+    "vue": "^2.5.17",
+    "vue-router": "3.4.8",
+    "vuex": "^3.6.0",
+    "webpack-bundle-analyzer": "^3.7.0",
+    "weixin-js-sdk": "^1.3.3",
+    "zepto": "^1.2.0"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~4.3.1",
+    "@vue/cli-plugin-eslint": "~4.3.1",
+    "@vue/cli-service": "~4.3.1",
+    "@vue/eslint-config-airbnb": "^5.0.2",
+    "axios": "^0.18.0",
+    "babel-eslint": "^10.1.0",
+    "babel-plugin-import": "^1.13.0",
+    "eslint": "^6.7.2",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-vue": "^6.2.2",
+    "husky": "^4.3.0",
+    "less": "^3.0.4",
+    "less-loader": "^4.1.0",
+    "lint-staged": "^10.5.2",
+    "prettier": "^2.2.0",
+    "vue-template-compiler": "^2.5.17"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx,json,css,scss,md,vue}": [
+      "prettier --write"
+    ]
+  },
+  "config": {
+    "title": "Vue Cli3",
+    "screenshot": "https://uufefile.uupt.com/PicLib/bomb/images/1535163897533.jpg",
+    "classify": "template",
+    "app_type": "none",
+    "use_type": "public"
+  },
+  "keywords": [
+    "bomb",
+    "ice-scaffold"
+  ],
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://116.255.145.41:7001"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://uugit.uupt.com/Web/PubLibs/UUPT.Bomb/UUPT.Bomb.Materials/tree/master/templates/none/public/vue-cli3"
+  }
+}
